@@ -1,0 +1,10 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Quinn Pham
+	email = quinnlp12@gmail.com
+[core]
+	editor = nvim
+[pager]
+	branch = false
+	diff = true
