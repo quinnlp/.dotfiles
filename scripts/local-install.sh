@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-if [[ ! -d "${LOCAL}" ]]; then
+if [[ "${#}" -ne 1 ]]; then
+	echo "Usage: ${0} BASE_PATH"
+	exit 1
+fi
+
+if [[ -z "${LOCAL}" || ! -d "${LOCAL}" ]]; then
 	echo "Error: LOCAL='${LOCAL}'"
 	exit 1
 fi
 
-if [[ ! -d "${OPT}" ]]; then
+if [[ -z "${OPT}" || ! -d "${OPT}" ]]; then
 	echo "Error: OPT='${OPT}'"
-	exit 1
-fi
-
-if [[ "${#}" -ne 1 ]]; then
-	echo "Usage: ${0} BASE_PATH"
 	exit 1
 fi
 
@@ -34,15 +34,15 @@ fi
 
 if [[ "${use_opt}" -ne 1 ]]; then
 	echo "Symlinking ${BASE_PATH} into the ${LOCAL} structure"
-	for target_path in $(find "${BASE_PATH}" -type f); do
-		relative_path="$(realpath --relative-to="${BASE_PATH}" "${target_path}")"
+	while read -r target_path; do
+		relative_path="$(realpath "${target_path}" -s --relative-to="${BASE_PATH}")" # '-s' to avoid overwriting install symlinks like clang in local
 		symlink_path="${LOCAL}/${relative_path}"
 		symlink_dir="$(dirname "${symlink_path}")"
 		if [[ ! -d "${symlink_dir}" ]]; then
 			mkdir -p "${symlink_dir}"
 		fi
-		ln -sf "${target_path}" "${symlink_path}"
-	done
+		ln -snf "${target_path}" "${symlink_path}"
+	done < <(find "${BASE_PATH}" -type f -o -type l -xtype f) # '-type l' to include install symlinks like clang
 else
 	echo "Symlinking ${BASE_PATH} into the ${OPT} structure"
 	base_name="$(basename "${BASE_PATH}")"
