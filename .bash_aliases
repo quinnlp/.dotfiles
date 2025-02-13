@@ -9,6 +9,10 @@ export SCRIPTS="$HOME/scripts"
 # Make directories for local installs
 mkdir -p "$INSTALLS" "$LOCAL" "$OPT" "$SOURCES"
 
+# Compilers
+export CC="$LOCAL/bin/clang"
+export CXX="$LOCAL/bin/clang++"
+
 # Compilation environment variables
 export CFLAGS="-I$LOCAL/include $CFLAGS"
 export LDFLAGS="-L$LOCAL/lib $LDFLAGS"
