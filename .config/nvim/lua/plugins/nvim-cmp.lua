@@ -35,13 +35,12 @@ return {
 			}),
 			sources = cmp.config.sources({
 				-- https://github.com/folke/lazydev.nvim?tab=readme-ov-file#-installation
-				{
-					name = "lazydev",
-					group_index = 0,
-				},
+				{ name = "lazydev" },
+			}, {
 				-- https://github.com/zbirenbaum/copilot-cmp?tab=readme-ov-file#source-definition
 				{ name = "copilot" },
 				{ name = "nvim_lsp" },
+				{ name = "path" },
 				{ name = "luasnip" },
 			}, {
 				{ name = "buffer" },
@@ -56,13 +55,13 @@ return {
 					},
 					ellipsis_char = "...",
 					show_labelDetails = true,
+					before = function(_, vim_item)
+						return vim_item
+					end,
 					-- https://github.com/zbirenbaum/copilot-cmp?tab=readme-ov-file#highlighting--icon
-					symbol_map = { Copilot = "" },
 					max_width = 50,
+					symbol_map = { Copilot = "" },
 				}),
-				before = function (_, vim_item)
-					return vim_item
-				end,
 				-- Columns of the completion window
 				fields = {
 					"kind",
