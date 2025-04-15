@@ -12,5 +12,8 @@ vim.opt.number = true
 -- Always draw the signcolumn
 vim.opt.signcolumn = 'yes'
 
+-- Enable diagnostic text
+vim.diagnostic.config({ virtual_text = true })
+
 -- Set miscellaneous mappings
 require("mappings")
