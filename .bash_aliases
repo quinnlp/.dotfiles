@@ -23,6 +23,7 @@ alias tij="TZ=Japan date"
 alias tia="TZ=America/Edmonton date"
 
 # Private local
+export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${LOCAL}/bin:${PATH}"
 
 # Private scripts
