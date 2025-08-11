@@ -10,8 +10,12 @@ export SOURCES="${HOME}/sources"
 mkdir -p "${INSTALLS}" "${LOCAL}" "${OPT}" "${SOURCES}"
 
 # Compilers
-export CC="${LOCAL}/bin/clang"
-export CXX="${LOCAL}/bin/clang++"
+if [[ -x "${LOCAL}/bin/clang" ]]; then
+	export CC="${LOCAL}/bin/clang"
+fi
+if [[ -x "${LOCAL}/bin/clang++" ]]; then
+	export CXX="${LOCAL}/bin/clang++"
+fi
 
 # Compiler flags
 export CFLAGS="-I ${LOCAL}/include ${CFLAGS}"
