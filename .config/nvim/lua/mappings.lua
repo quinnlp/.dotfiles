@@ -17,3 +17,6 @@ vim.keymap.set("n", "<down>", "")
 -- Comment and uncomment lines
 vim.keymap.set("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 vim.keymap.set("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
+
+-- View diagnostic
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)

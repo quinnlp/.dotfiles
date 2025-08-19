@@ -32,6 +32,7 @@ symlink() {
 }
 
 symlink ".bash_aliases"
+symlink ".config/git/ignore"
 symlink ".config/nvim"
 symlink ".gitconfig"
 symlink ".tmux.conf"
