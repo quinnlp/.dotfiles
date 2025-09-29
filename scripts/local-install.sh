@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ "${#}" -ne 1 ]]; then
-	echo "Usage: ${0} BASE_PATH"
+if [[ "$#" -ne "1" ]]; then
+	echo "Usage: $0 BASE_PATH"
 	exit 1
 fi
 
@@ -15,11 +15,11 @@ if [[ -z "${OPT}" || ! -d "${OPT}" ]]; then
 	exit 1
 fi
 
-BASE_PATH="$(realpath "${1}")"
+BASE_PATH="$(realpath "$1")"
 
 # Determine where the software should be local installed
 use_opt=0
-if [[ ! -d "${BASE_PATH}" ]]; then
+if ! [[ -d "${BASE_PATH}" ]]; then
 	echo "${BASE_PATH} will not fit in the ${LOCAL} structure"
 	use_opt=1
 else
