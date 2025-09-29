@@ -1,6 +1,5 @@
--- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#lazynvim
+-- https://github.com/mason-org/mason.nvim?tab=readme-ov-file#recommended-setup-for-lazynvim
 return {
 	"williamboman/mason.nvim",
-	-- https://github.com/williamboman/mason-lspconfig.nvim?tab=readme-ov-file#setup
 	opts = {},
 }
