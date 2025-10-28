@@ -1,13 +1,12 @@
 # Useful paths
+export LOCAL="${HOME}/.local"
+export OPT="${HOME}/.opt"
 export DOTFILES="${HOME}/dotfiles"
-export INSTALLS="${HOME}/installs"
-export LOCAL="${HOME}/local"
-export OPT="${HOME}/opt"
 export SCRIPTS="${HOME}/scripts"
-export SOURCES="${HOME}/sources"
+export SRC="${HOME}/src"
 
 # Make directories for local installs
-mkdir -p "${INSTALLS}" "${LOCAL}" "${OPT}" "${SOURCES}"
+mkdir -p "${LOCAL}" "${OPT}" "${SRC}"
 
 # Compilers
 if [[ -x "${LOCAL}/bin/clang" ]]; then
@@ -15,6 +14,11 @@ if [[ -x "${LOCAL}/bin/clang" ]]; then
 fi
 if [[ -x "${LOCAL}/bin/clang++" ]]; then
 	export CXX="${LOCAL}/bin/clang++"
+fi
+
+# Neovim
+if [[ -d "${OPT}/nvim-linux-x86_64" ]]; then
+	export PATH="${OPT}/nvim-linux-x86_64/bin:${PATH}"
 fi
 
 # Compiler flags
