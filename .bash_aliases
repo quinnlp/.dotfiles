@@ -1,45 +1,47 @@
+[ -n "${BASH_ALIASES_LOADED}" ] && return
+export BASH_ALIASES_LOADED=1
+
+# Prepend a path to PATH if not already present.
+# Usage: prepend_path "/some/path"
+prepend_path() {
+	local dir="${1%/}"  # remove trailing slash
+	case ":${PATH}:" in
+		*":${dir}:"*)
+			# do nothing
+		;;
+		*)
+			PATH="${dir}:${PATH}"
+		;;
+	esac
+}
+
 # Useful paths
-export LOCAL="${HOME}/.local"
-export OPT="${HOME}/.opt"
 export DOTFILES="${HOME}/dotfiles"
 export SCRIPTS="${HOME}/scripts"
+
+# Local install paths
+export LOCAL="${HOME}/.local"
+export OPT="${HOME}/.opt"
 export SRC="${HOME}/src"
 
-# Make directories for local installs
-mkdir -p "${LOCAL}" "${OPT}" "${SRC}"
-
-# Compilers
-if [[ -x "${LOCAL}/bin/clang" ]]; then
-	export CC="${LOCAL}/bin/clang"
-fi
-if [[ -x "${LOCAL}/bin/clang++" ]]; then
-	export CXX="${LOCAL}/bin/clang++"
-fi
-
-# Neovim
-if [[ -d "${OPT}/nvim-linux-x86_64" ]]; then
-	export PATH="${OPT}/nvim-linux-x86_64/bin:${PATH}"
-fi
+# Make directories for local install
+mkdir -p "${LOCAL}" "${OPT}" "${SRC}" >/dev/null 2>&1
 
 # Compiler flags
-export CFLAGS="-I ${LOCAL}/include ${CFLAGS}"
-export CXXFLAGS="-I ${LOCAL}/include ${CXXFLAGS}"
-export LDFLAGS="-L ${LOCAL}/lib ${LDFLAGS}"
+export CFLAGS="${CFLAGS:+${CFLAGS} } -I${LOCAL}/include"
+export CXXFLAGS="${CXXFLAGS:+${CXXFLAGS} } -I${LOCAL}/include"
+export LDFLAGS="${LDFLAGS:+${LDFLAGS} } -L${LOCAL}/lib"
 
-# Time aliases
-alias tij="TZ=Japan date"
+# Clang
+[ -x "${LOCAL}/bin/clang" ]   && export CC="${LOCAL}/bin/clang"
+[ -x "${LOCAL}/bin/clang++" ] && export CXX="${LOCAL}/bin/clang++"
+
+# Neovim
+[ -d "${OPT}/nvim-linux-x86_64/bin" ] && prepend_path "${OPT}/nvim-linux-x86_64/bin"
+
+prepend_path "${SCRIPTS}"
+prepend_path "${LOCAL}/bin"
+
+# Timezone aliases
 alias tia="TZ=America/Edmonton date"
-
-# Private local
-export PATH="${HOME}/.local/bin:${PATH}"
-export PATH="${LOCAL}/bin:${PATH}"
-
-# Private scripts
-export PATH="${SCRIPTS}:${PATH}"
-
-# CMPUT415 ANTLR4 setup
-export ANTLR_INS="${INSTALLS}/antlr4-4.13.2-install"
-export ANTLR_JAR="${INSTALLS}/antlr-4.13.2-complete.jar"
-export CLASSPATH="${ANTLR_JAR}:${CLASSPATH}"
-alias antlr4="java -Xmx500M org.antlr.v4.Tool"
-alias grun="java org.antlr.v4.gui.TestRig"
+alias tij="TZ=Japan date"
