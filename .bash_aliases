@@ -28,13 +28,16 @@ export SRC="${HOME}/src"
 mkdir -p "${LOCAL}" "${OPT}" "${SRC}" >/dev/null 2>&1
 
 # Compiler flags
-export CFLAGS="${CFLAGS:+${CFLAGS} } -I${LOCAL}/include"
-export CXXFLAGS="${CXXFLAGS:+${CXXFLAGS} } -I${LOCAL}/include"
-export LDFLAGS="${LDFLAGS:+${LDFLAGS} } -L${LOCAL}/lib"
+export CFLAGS="${CFLAGS:+${CFLAGS} }-I${LOCAL}/include"
+export CXXFLAGS="${CXXFLAGS:+${CXXFLAGS} }-I${LOCAL}/include"
+export LDFLAGS="${LDFLAGS:+${LDFLAGS} }-L${LOCAL}/lib"
 
 # Clang
 [ -x "${LOCAL}/bin/clang" ]   && export CC="${LOCAL}/bin/clang"
 [ -x "${LOCAL}/bin/clang++" ] && export CXX="${LOCAL}/bin/clang++"
+
+# Shared library path
+export LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # Neovim
 [ -d "${OPT}/nvim-linux-x86_64/bin" ] && prepend_path "${OPT}/nvim-linux-x86_64/bin"
