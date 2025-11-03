@@ -39,11 +39,19 @@ export LDFLAGS="${LDFLAGS:+${LDFLAGS} }-L${LOCAL}/lib"
 # Shared library path
 export LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
-# Neovim
-[ -d "${OPT}/nvim-linux-x86_64/bin" ] && prepend_path "${OPT}/nvim-linux-x86_64/bin"
+# Editor
+if [[ -d "${OPT}/nvim-linux-x86_64/bin" ]]; then
+	prepend_path "${OPT}/nvim-linux-x86_64/bin"
+	EDITOR="${OPT}/nvim-linux-x86_64/bin/nvim"
+else
+	EDITOR="vim"
+fi
+export EDITOR
 
+# Update PATH
 prepend_path "${SCRIPTS}"
 prepend_path "${LOCAL}/bin"
+export PATH
 
 # Timezone aliases
 alias tia="TZ=America/Edmonton date"
