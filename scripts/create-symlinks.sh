@@ -39,7 +39,6 @@ symlink() {
 SYMLINKS=(
 	".config/git/ignore"
 	".config/nvim"
-	".local/lib/tmux-setup.sh"
 	"scripts"
 	".bash_aliases"
 	".gitconfig"
