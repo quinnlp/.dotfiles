@@ -8,10 +8,10 @@ prepend_path() {
 	case ":${PATH}:" in
 		*":${dir}:"*)
 			# do nothing
-		;;
+			;;
 		*)
 			PATH="${dir}:${PATH}"
-		;;
+			;;
 	esac
 }
 
@@ -40,9 +40,8 @@ export LDFLAGS="${LDFLAGS:+${LDFLAGS} }-L${LOCAL}/lib"
 export LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # Editor
-if [[ -d "${OPT}/nvim-linux-x86_64/bin" ]]; then
-	prepend_path "${OPT}/nvim-linux-x86_64/bin"
-	EDITOR="${OPT}/nvim-linux-x86_64/bin/nvim"
+if command -v nvim >/dev/null 2>&1; then
+	EDITOR="nvim"
 else
 	EDITOR="vim"
 fi
