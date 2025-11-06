@@ -1,20 +1,6 @@
 [ -n "${BASH_ALIASES_LOADED}" ] && return
 export BASH_ALIASES_LOADED=1
 
-# Prepend a path to PATH if not already present.
-# Usage: prepend_path "/some/path"
-prepend_path() {
-	local dir="${1%/}"  # remove trailing slash
-	case ":${PATH}:" in
-		*":${dir}:"*)
-			# do nothing
-			;;
-		*)
-			PATH="${dir}:${PATH}"
-			;;
-	esac
-}
-
 # Useful paths
 export DOTFILES="${HOME}/dotfiles"
 export SCRIPTS="${HOME}/scripts"
@@ -36,8 +22,15 @@ export LDFLAGS="${LDFLAGS:+${LDFLAGS} }-L${LOCAL}/lib"
 [ -x "${LOCAL}/bin/clang" ]   && export CC="${LOCAL}/bin/clang"
 [ -x "${LOCAL}/bin/clang++" ] && export CXX="${LOCAL}/bin/clang++"
 
+# CUDA
+if [[ -d "/usr/local/cuda" ]]; then
+	PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
+	LD_LIBRARY_PATH="/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+fi
+
 # Shared library path
-export LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+export LD_LIBRARY_PATH
 
 # Editor
 if command -v nvim >/dev/null 2>&1; then
@@ -48,8 +41,8 @@ fi
 export EDITOR
 
 # Update PATH
-prepend_path "${SCRIPTS}"
-prepend_path "${LOCAL}/bin"
+PATH="${SCRIPTS}${PATH:+:${PATH}}"
+PATH="${LOCAL}/bin${PATH:+:${PATH}}"
 export PATH
 
 # Timezone aliases
