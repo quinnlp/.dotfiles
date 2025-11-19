@@ -1,36 +1,17 @@
-[ -n "${BASH_ALIASES_LOADED}" ] && return
+if [[ -n "${BASH_ALIASES_LOADED}" ]]; then
+	return
+fi
 export BASH_ALIASES_LOADED=1
 
-# Useful paths
-export DOTFILES="${HOME}/dotfiles"
-export SCRIPTS="${HOME}/scripts"
-
-# Local install paths
+# Constant paths
 export LOCAL="${HOME}/.local"
 export OPT="${HOME}/.opt"
+export DOTFILES="${HOME}/dotfiles"
+export SCRIPTS="${HOME}/scripts"
 export SRC="${HOME}/src"
 
 # Make directories for local install
 mkdir -p "${LOCAL}" "${OPT}" "${SRC}" >/dev/null 2>&1
-
-# Compiler flags
-export CFLAGS="${CFLAGS:+${CFLAGS} }-I${LOCAL}/include"
-export CXXFLAGS="${CXXFLAGS:+${CXXFLAGS} }-I${LOCAL}/include"
-export LDFLAGS="${LDFLAGS:+${LDFLAGS} }-L${LOCAL}/lib"
-
-# Clang
-[ -x "${LOCAL}/bin/clang" ]   && export CC="${LOCAL}/bin/clang"
-[ -x "${LOCAL}/bin/clang++" ] && export CXX="${LOCAL}/bin/clang++"
-
-# CUDA
-if [[ -d "/usr/local/cuda" ]]; then
-	PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
-	LD_LIBRARY_PATH="/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
-fi
-
-# Shared library path
-LD_LIBRARY_PATH="${HOME}/.local/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
-export LD_LIBRARY_PATH
 
 # Editor
 if command -v nvim >/dev/null 2>&1; then
@@ -40,7 +21,17 @@ else
 fi
 export EDITOR
 
-# Update PATH
+# Shared library path
+LD_LIBRARY_PATH="${LOCAL}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+export LD_LIBRARY_PATH
+
+# CUDA
+if [[ -d "/usr/local/cuda" ]]; then
+	LD_LIBRARY_PATH="/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+	PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
+fi
+
+# PATH
 PATH="${SCRIPTS}${PATH:+:${PATH}}"
 PATH="${LOCAL}/bin${PATH:+:${PATH}}"
 export PATH
