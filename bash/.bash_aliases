@@ -5,13 +5,12 @@ export BASH_ALIASES_LOADED=1
 
 # Constant paths
 export LOCAL="${HOME}/.local"
-export OPT="${HOME}/.opt"
-export DOTFILES="${HOME}/dotfiles"
-export SCRIPTS="${HOME}/scripts"
-export SRC="${HOME}/src"
+export OPT="${LOCAL}/opt"
+export STOW="${LOCAL}/stow"
+export DOTFILES="${HOME}/.dotfiles"
 
 # Make directories for local install
-mkdir -p "${LOCAL}" "${OPT}" "${SRC}" >/dev/null 2>&1
+mkdir -p "${OPT}" "${STOW}" >/dev/null 2>&1
 
 # Editor
 if command -v nvim >/dev/null 2>&1; then
