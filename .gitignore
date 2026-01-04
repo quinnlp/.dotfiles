@@ -1,0 +1,5 @@
+# Background setting file
+/nvim/.config/nvim/background-setting.txt
+
+# Lazy lockfile
+/nvim/.config/nvim/lazy-lock.json
