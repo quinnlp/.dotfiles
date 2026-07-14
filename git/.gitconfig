@@ -1,17 +1,20 @@
+[advice]
+	addIgnoredFile = false
+
+[core]
+	editor = nvim
+
 [init]
 	defaultBranch = main
+
+[pager]
+	branch = false
 
 [user]
 	name = Quinn Pham
 	email = quinnlp12@gmail.com
 
-[core]
-	editor = nvim
-	excludesfile = ~/.config/git/ignore
-
-[pager]
-	branch = false
-	diff = true
-
-[advice]
-	addIgnoredFile = false
+[includeIf "hasconfig:remote.*.url:git@github.com:intel/*"]
+	path = ~/.config/git/config-intel
+[includeIf "hasconfig:remote.*.url:https://github.com/intel/*"]
+	path = ~/.config/git/config-intel

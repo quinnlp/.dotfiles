@@ -1,3 +1,7 @@
+# Claude
+export AWS_REGION="us-east-2"
+export CLAUDE_CODE_USE_BEDROCK=1
+
 # Editor
 if command -v nvim >/dev/null 2>&1; then
 	export EDITOR="nvim"
@@ -9,7 +13,3 @@ else
     	export EDITOR="vi"
     	export VISUAL="vi"
 fi
-
-# Claude
-export AWS_REGION="us-east-2"
-export CLAUDE_CODE_USE_BEDROCK=1
