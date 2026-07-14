@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly SCRIPT_PATH="$(readlink -f -- "${BASH_SOURCE[0]}")"
+readonly PROFILE_DIR="$(dirname -- "$SCRIPT_PATH")/../../profile"
+
+if [[ ! -d "$PROFILE_DIR" ]]; then
+	echo "ERROR: profile dir not found: $PROFILE_DIR" >&2
+	exit 1
+fi
+
+readonly TARGET=$HOME/.profile
+readonly BEGIN="# >>> dotfiles profile >>>"
+readonly END="# <<< dotfiles profile <<<"
+
+if [[ -f "$TARGET" ]]; then
+	sed -i "/^$BEGIN$/,/^$END$/d" "$TARGET"
+fi
+
+shopt -s dotglob nullglob
+
+readonly BLOCK=$(
+	echo "$BEGIN"
+	# .secrets.sh is untracked
+	echo "[ -f ~/.secrets.sh ] && . ~/.secrets.sh"
+	for path in "$PROFILE_DIR"/*; do
+		name="$(basename "$path")"
+		echo "[ -f ~/$name ] && . ~/$name"
+	done
+	echo "$END"
+)
+
+printf '%s\n' "$BLOCK" >>"$TARGET"
+
+echo "Wrote the following block to $TARGET:"
+echo "$BLOCK"
