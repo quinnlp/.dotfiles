@@ -25,7 +25,8 @@ return {
 			end
 		end
 
-		-- Initialize background.
+		-- Initialize background and set default to light.
+		vim.o.background = "light"
 		set_background()
 
 		-- Setup timer to check the background setting every 15 minutes (900000 ms).
