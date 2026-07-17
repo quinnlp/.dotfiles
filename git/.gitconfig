@@ -10,6 +10,9 @@
 [pager]
 	branch = false
 
+[push]
+	autoSetupRemote = true
+
 [user]
 	name = Quinn Pham
 	email = quinnlp12@gmail.com
