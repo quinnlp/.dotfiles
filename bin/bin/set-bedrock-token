@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $(basename -- "$0") <key>" >&2
+	exit 1
+fi
+
+readonly TARGET="$HOME/.secrets.sh"
+
+sed -i "/^export AWS_BEARER_TOKEN_BEDROCK=/d" "$TARGET" 2>/dev/null || true
+echo "export AWS_BEARER_TOKEN_BEDROCK=$1" >>"$TARGET"
